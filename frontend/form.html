@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <!-- bootstrap -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> -->
+    
+    <title>Document</title>
+    <script src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+
+    <!-- jsGrid CDN -->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+
+    <!-- Include jsGrid script and css stylesheet -->
+    <link type="text/css" rel="stylesheet" href="jsgrid-1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="jsgrid-1.5.3/jsgrid-theme.min.css" />
+    <script type="text/javascript" src="jsgrid-1.5.3/jsgrid.min.js"></script>
+
+    <!-- jquery-json -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-json/2.4.0/jquery.json.min.js" integrity="sha512-9NmpiQOdXiPqp4Rprwz/AYELfKhGnfzbUkgT8DmYbkGCLI8rFoB7J7aJSgkgACn3xgCtyUBnXp9Pqxc9+Iv6/w==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-json/2.6.0/jquery.json.min.js" integrity="sha512-QE2PMnVCunVgNeqNsmX6XX8mhHW+OnEhUhAWxlZT0o6GFBJfGRCfJ/Ut3HGnVKAxt8cArm7sEqhq2QdSF0R7VQ==" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="dist/jquery.json.min.js"></script>
+  </head>
+
+  <body>
+    <h2>Form Service Request</h2>
+    <form id="create-user" class="form1" action="">
+      <fieldset><legend>Service Request</legend>
+      <label for="requesterPayroll">Requester Payroll</label>
+      <select id="requesterPayroll" onchange="getRequesterName(event)">
+        <option value="">Select Payroll</option>
+      </select>
+
+      <!-- ===================================DROPDOWN PAYROLL===================== -->
+      <script>
+        $(document).ready(function () {
+          var url = "http://localhost:5000/employee";
+
+          $.getJSON(url, function (data) {
+              $.each(data, function (index, value) {
+                  // APPEND OR INSERT DATA TO SELECT ELEMENT.
+                  $('#requesterPayroll').append('<option value="' + value.payroll + ' " data-name= "' + value.name + '">' + value.payroll + '</option>');
+              });
+          });
+          
+        });
+
+      </script>
+
+      <label for="requesterName">Requester Name</label>
+      <input name="requesterName" id="requesterName" type="text" readonly>
+
+      <label for="status">Status</label>
+      <select id="status">
+        <option value="">Select Status</option>
+        <option value="submit">Submit</option>
+        <option value="review">Review</option>
+        <option value="approved">Approved</option>
+      </select>
+
+      </fieldset>
+
+      <fieldset><legend>Service Item</legend>
+        <label for="serviceId">Service Id</label>
+        <!-- <input id="serviceId" type="text"> -->
+        <select id="serviceId" onchange="getServiceType(event)">
+          <option value="">Select Service Id</option>
+        </select>
+
+        <!-- =========================DROPDOWN SERVICE ID============================ -->
+        <script>
+          $(document).ready(function () {
+                  
+            var url = "http://127.0.0.1:5000/service";
+  
+            $.getJSON(url, function (data) {
+                $.each(data, function (index, value) {
+                    // APPEND OR INSERT DATA TO SELECT ELEMENT.
+                    $('#serviceId').append('<option value="' + value.service_id + '" data-service-type= "' + value.service_type + '">' + value.service_id + '</option>');
+                });
+            });
+          });
+        </script>
+  
+        <label for="serviceType">Service Type</label>
+        <input id="serviceType" type="text" readonly>
+  
+        <label for="description">Description</label>
+        <input id="description" type="text">
+
+        <label for="quantity">Quantity</label>
+        <input id="quantity" type="number">
+
+        <label for="unitPrice">Unit Price</label>
+        <input id="unitPrice" type="number">
+
+        <div class="inputSize">
+        <!-- <button id="addServiceItem" onclick="addServiceItem()">Add Service Item</button> -->
+        <input type="button" value="Add Service Item" onclick="addServiceItem()" id="addSvc">
+        </div>
+
+        <table id="tableServiceItem" border="1" width="100%">
+          <tr class="data">
+              <th>Service Id</th>
+              <th>Service Type</th>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Unit Price</th>
+          </tr>
+        </table>
+
+      </fieldset>
+
+      <fieldset><legend>Comment</legend>
+        <label for="comment">Comment</label>
+        <input id="comment" type="text">
+
+        <div class="inputSize">
+        <input type="button" value="Add Comment" onclick="addComment()" id="addCom">
+        </div>
+
+        <table id="tableComment" border="1" width="100%">
+          <tr>
+              <th>Comment</th>
+          </tr>
+        </table>
+      </fieldset>
+
+    </form>
+    <br />
+    <button onclick="sendData()">Submit</button>
+
+
+    <!-- <div id="jsGrid"></div>
+
+    <script>
+      $("#jsGrid").jsGrid({
+          height: "auto",
+          width: "100%",
+
+          filtering: false,
+          sorting: true,
+          autoload: true,
+          paging: true,
+          pageSize: 5,
+          pageButtonCount: 10,
+          pageIndex:  1,
+
+
+          controller: {
+            loadData: function(filter) {
+              return $.ajax({
+                type: "GET",
+                url: "http://localhost:5000/service_request",
+                dataType: "json",
+                data: filter
+              });
+            }
+          },
+
+          fields: [
+            {name: "service_request_id", title: "Id", type: "number", align: "left", width: 10},
+            {name: "requester_payroll", title: "Requester Payroll", type: "number", align: "left", width: 50},
+            {name: "requester_name", title: "Requester Name", type: "text", align: "left", width: 50},
+            {name: "created_date", title: "Created Date", type: "text", align: "left", width: 60, sorting: false},
+            {name: "status", title: "Status", type: "text", align: "left", width: 50},
+            //{name: "comments.comment", title: "Comment", type: "text", align: "left", width: 50}
+          ]
+          
+      });
+
+    </script> -->
+
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    -->
+
+  </body>
+
+</html>

@@ -1,0 +1,70 @@
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <title>Document</title>
+    <script src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+    <!-- jsGrid CDN -->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+
+    <!-- Include jsGrid script and css stylesheet -->
+    <link type="text/css" rel="stylesheet" href="jsgrid-1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="jsgrid-1.5.3/jsgrid-theme.min.css" />
+    <script type="text/javascript" src="jsgrid-1.5.3/jsgrid.min.js"></script>
+
+  </head>
+
+  <body>
+    <h2>List Service Request</h2>
+
+    <a href="form.html">Create Service Request</a>
+    
+    <div id="jsGrid"></div>
+
+    <script>
+      $("#jsGrid").jsGrid({
+          height: "auto",
+          width: "100%",
+
+          filtering: false,
+          sorting: true,
+          autoload: true,
+          paging: true,
+          pageSize: 10,
+          pageButtonCount: 10,
+          pageIndex:  1,
+
+
+          controller: {
+            loadData: function(filter) {
+              return $.ajax({
+                type: "GET",
+                url: "http://localhost:5000/service_request",
+                dataType: "json",
+                data: filter
+              });
+            }
+          },
+
+          fields: [
+            {name: "service_request_id", title: "Id", type: "number", align: "left", width: 10},
+            {name: "requester_payroll", title: "Requester Payroll", type: "number", align: "left", width: 50},
+            {name: "requester_name", title: "Requester Name", type: "text", align: "left", width: 50},
+            {name: "created_date", title: "Created Date", type: "text", align: "left", width: 60, sorting: false},
+            {name: "status", title: "Status", type: "text", align: "left", width: 50},
+            //{name: "comments.comment", title: "Comment", type: "text", align: "left", width: 50}
+          ]
+          
+      });
+
+    </script>
+
+  </body>
+
+</html>
