@@ -8,7 +8,7 @@
 
 - [ ] [Python 3.6](https://www.python.org/downloads/release/python-365/)
 - [ ] [Pip](https://pip.pypa.io/en/stable/installing/)
-- [ ] [Virtualenv](https://virtualenv.pypa.io/en/stable/installation/)
+- [ ] [Virtualenv](https://virtualenv.pypa.io/en/latest/)
 - [ ] [PostgreSQL](https://www.postgresql.org/)
 
 ### Setting up + Running
