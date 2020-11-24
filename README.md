@@ -6,7 +6,7 @@
 
 ### Prerequisites
 
-- [ ] [Python 3.6](https://www.python.org/downloads/release/python-365/)
+- [ ] [Python 3.6 or higher](https://www.python.org/downloads/)
 - [ ] [Pip](https://pip.pypa.io/en/stable/installing/)
 - [ ] [Virtualenv](https://virtualenv.pypa.io/en/latest/)
 - [ ] [PostgreSQL](https://www.postgresql.org/)
