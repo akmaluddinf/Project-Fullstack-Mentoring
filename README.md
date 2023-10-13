@@ -16,7 +16,7 @@
 1. Clone the repo:
 
     ```
-    $ git https://github.com/akmaluddinf/Project-Fullstack-Mentoring.git
+    $ git clone https://github.com/akmaluddinf/Project-Fullstack-Mentoring.git
     $ cd Project-Fullstack-Mentoring
     $ cd backend
     ```
